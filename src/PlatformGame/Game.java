@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//change    
 package PlatformGame;
 
 import static PlatformGame.GameState.*;
@@ -17,10 +13,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 import ui.Button;
 
-/**
- *
- * @author anton
- */
+
 public class Game extends JFrame implements Runnable{
      
      private final double FPS_SET=120.0;
