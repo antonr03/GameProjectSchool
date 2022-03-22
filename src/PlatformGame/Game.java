@@ -5,6 +5,8 @@ package PlatformGame;
 import static PlatformGame.GameState.*;
 import Scenes.MapBuilder;
 import Scenes.Menu;
+import helpz.LoadSave;
+import helpz.TheMap;
 
 
 import inputs.MouseInputs;
@@ -45,6 +47,9 @@ public class Game extends JFrame implements Runnable{
         pack();
         setVisible(true);
         thread.start();
+        LoadSave.writeToFile(TheMap.map(),"text");
+        
+ 
 
         
 
