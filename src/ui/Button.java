@@ -18,7 +18,7 @@ public class Button{
     private int x,y,width,height;
     private String name;
     public Rectangle bounds;
-    int d=10;
+    Color color=Color.white;
     
     private boolean mouseOver;
     private BufferedImage img;
@@ -45,8 +45,8 @@ public class Button{
 
     public void drawButton(Graphics g ){
         
-        g.drawRect(d, 250, 100, 100);
-        d++;
+        
+        
         drawBody(g);
         drawEdges(g);
         
@@ -73,7 +73,7 @@ public class Button{
         
     }
     private void drawBody(Graphics g){
-        
+        g.setColor(color);
         g.fillRect(x, y, width, height);
 
     }
@@ -95,5 +95,9 @@ public class Button{
 		this.mouseOver = false;
 
 	}
+    public void setColor(Color color){
+        this.color= color;
+
+    }
     
 }

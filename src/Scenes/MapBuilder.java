@@ -27,7 +27,8 @@ public class MapBuilder implements ScneneMethods {
     private Tile selectedTile;
     private Random c;
     private Random d;
-
+    private int k;
+    boolean outsideBounds;
     public MapBuilder(Game game) {
         this.game = game;
         bottomBar = new BottomBar(game);
@@ -35,6 +36,7 @@ public class MapBuilder implements ScneneMethods {
         map=TheMap.map();
         c= new Random();
         d= new Random();
+        k=0;
                 
 
     }
@@ -44,12 +46,19 @@ public class MapBuilder implements ScneneMethods {
         for (int x = 0; x < 20; x++) {
             for (int y = 0; y < 20; y++) {
                 g.drawImage(game.getTileManager().getSprite(map[x][y]),x*32, y*32, null);
+                
 
             }
+            
         }
 
         bottomBar.drawBottom(g);
-        drawSelectedsTile(g);
+        if(outsideBounds==true){
+            drawSelectedsTile(g);
+        }
+        //LoadSave.createFile();
+        
+        
 
     }
 
@@ -60,28 +69,28 @@ public class MapBuilder implements ScneneMethods {
 
     @Override
     public void mouseDragged(int x, int y) {
+        if(checkForBounds(x, y)){
+            
+            map[x/32][y/32]=selectedTile.id;
+
+        }
 
     }
 
     @Override
     public void mouseMoved(int x, int y) {
+        bottomBar.saveButton.setMouseOver(false);
+		
 
-        bottomBar.grassButton.setMouseOver(false);
-        bottomBar.waterButton.setMouseOver(false);
-        bottomBar.rockButton.setMouseOver(false);
+		if (bottomBar.saveButton.bounds.contains(x, y)) {
+			bottomBar.saveButton.setMouseOver(true);
+                        
+		} 
 
-        if (bottomBar.grassButton.bounds.contains(x, y)) {
-            bottomBar.grassButton.setMouseOver(true);
-        }
-        if (bottomBar.waterButton.bounds.contains(x, y)) {
-            bottomBar.waterButton.setMouseOver(true);
-        }
-        if (bottomBar.rockButton.bounds.contains(x, y)) {
-            bottomBar.rockButton.setMouseOver(true);
-        }
-        if (y < 640) {
-            selectedTile.y = y;
-            selectedTile.x = x;
+        
+        if (checkForBounds(x, y)) {
+            selectedTile.y = (y/32)*32;
+            selectedTile.x = (x/32)*32;
         }
 
     }
@@ -91,33 +100,46 @@ public class MapBuilder implements ScneneMethods {
         if (bottomBar.grassButton.bounds.contains(x, y)) {
             selectedTile.name = "GRASS";
             selectedTile.sprite = game.getTileManager().getSprite(2);
+            selectedTile.id=2;
 
         }
         if (bottomBar.waterButton.bounds.contains(x, y)) {
             selectedTile.name = "WATER";
             selectedTile.sprite = game.getTileManager().getSprite(0);
+            selectedTile.id=0;
 
         }
         if (bottomBar.rockButton.bounds.contains(x, y)) {
             selectedTile.name = "ROCK";
             selectedTile.sprite = game.getTileManager().getSprite(1);
+            selectedTile.id=1;
 
         }
-        if(y<640){
-            map[(int)x/32][(int)y/32]=selectedTile.id;
-            System.out.println("Scenes.MapBuilder.mouseClicked()");
+        
+        if(checkForBounds(x, y)){
+            
+            map[x/32][y/32]=selectedTile.id;
+            
+
         }
-        
-        
+       
+		
 
-
-        
-        
-
+		if (bottomBar.saveButton.bounds.contains(x, y)) {
+                    
+			bottomBar.saveButton.setColor(Color.yellow);
+                        LoadSave.writeToFile(map, "text");
+                        LoadSave.readFromFile();
+                        
+		} 
         
 
     }
-
+    boolean checkForBounds(int x, int y){
+        if(x<640&&x>=0&&y<640&&y>0)return outsideBounds=true;
+        else return outsideBounds= false;
+        
+        }
     @Override
     public void mousePressed(int x, int y) {
         throw new UnsupportedOperationException("Not supported yet."); 
@@ -127,5 +149,9 @@ public class MapBuilder implements ScneneMethods {
     public void mouseReleased(int x, int y) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+    }
 
-}
+    
+
+
+

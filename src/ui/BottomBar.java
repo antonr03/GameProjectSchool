@@ -23,6 +23,7 @@ public class BottomBar {
     public Button grassButton;
     public Button waterButton;
     public Button rockButton;
+    public Button saveButton;
     public BottomBar(Game game){
             
 
@@ -39,6 +40,7 @@ public class BottomBar {
         grassButton.drawImgButton(g);
         waterButton.drawImgButton(g);
         rockButton.drawImgButton(g);
+        saveButton.drawButton(g);
     }
     private void initButtons(){
         int x,y,width,height;
@@ -46,9 +48,10 @@ public class BottomBar {
         y=650;
         width=50;
         height=50;
-        grassButton= new Button(x,y,width,height,"WATER",game.getTileManager().getSprite(0));
-        waterButton= new Button(x+2*x,y,width,height,"ROCK",game.getTileManager().getSprite(1));
-        rockButton= new Button(x+4*x,y,width,height,"GRASS",game.getTileManager().getSprite(2));
+        grassButton= new Button(x,y,width,height,"WATER",game.getTileManager().getSprite(2));
+        waterButton= new Button(x+2*x,y,width,height,"ROCK",game.getTileManager().getSprite(0));
+        rockButton= new Button(x+4*x,y,width,height,"GRASS",game.getTileManager().getSprite(1));
+        saveButton= new Button(400,650,100,30,"save");
         
     }
 

@@ -70,6 +70,23 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
+        switch (GameState.gameState) {
+
+            case MENU:
+                
+
+                break;
+            case PLAYING:
+
+                break;
+            case SETTINGS:
+
+                break;
+            case MAPBULDER:
+                game.getMapBuilder().mouseDragged(e.getX(), e.getY());
+                break;
+
+        }
 
     }
 
